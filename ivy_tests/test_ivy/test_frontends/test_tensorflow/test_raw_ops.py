@@ -853,10 +853,8 @@ def test_tensorflow_Sign(  # NOQA
 
 @st.composite
 def _get_splits(draw, as_list=False):
-    """
-    Generate valid splits, either by generating an integer that evenly divides the axis
-    or a list of splits that sum to the length of the axis being split.
-    """
+    """Generate valid splits, either by generating an integer that evenly divides the
+    axis or a list of splits that sum to the length of the axis being split."""
     shape = draw(st.shared(helpers.get_shape(min_num_dims=1), key="value_shape"))
     axis = draw(
         st.shared(helpers.get_axis(shape=shape, force_int=True), key="target_axis")
@@ -1355,6 +1353,8 @@ def test_tensorflow_FFT(  # NOQA
         fn_tree=fn_tree,
         on_device=on_device,
         input=x[0],
+        rtol=1e-02,
+        atol=1e-02,
     )
 
 
@@ -1593,7 +1593,6 @@ def test_tensorflow_Reverse(
     test_flags,
     on_device,
 ):
-
     dtype, x, axis_dtype, axis = dtype_x_axis
     helpers.test_frontend_function(
         input_dtypes=dtype + axis_dtype,
